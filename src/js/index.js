@@ -29,12 +29,14 @@ const controlSearch = async () => {
         }
 
     }
-}
+};
 
 elements.searchForm.addEventListener('submit', e => {
     e.preventDefault();
     controlSearch();
 });
+
+
 
 elements.searchResPages.addEventListener('click', e => {
     const btn = e.target.closest('.btn-inline');
@@ -53,9 +55,10 @@ const controlRecipe = async () => {
 
     if (id) {
         state.recipe = new Recipe(id);
+
         try {
             await state.recipe.getRecipe();
-
+            state.recipe.parseIngredients();
             state.recipe.calcTime();
             state.recipe.calcServings();
 
