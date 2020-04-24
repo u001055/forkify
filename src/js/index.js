@@ -95,17 +95,28 @@ const controlRecipe = async () => {
 
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 
-
+// Добавление всего рецепта в shopping list
 const controlList = () => {
     if (!state.list) state.list = new List();
 
     state.recipe.ingredients.forEach(el => {
+        //console.log('el: ', el);
         const item = state.list.addItem(el.count, el.unit, el.ingredient);
+        //console.log('item: ', item);
         listView.renderItem(item);
     });
 
 }
 
+// Добавление 1 ингредиента в shopping list
+const controlList1 = (id) => {
+    if (!state.list) state.list = new List();
+    const el = state.recipe.ingredients[id];
+    const item = state.list.addItem(el.count, el.unit, el.ingredient);
+    listView.renderItem(item);
+}
+
+// Изменения в shopping list
 elements.shopping.addEventListener('click', e => {
     const id = e.target.closest('.shopping__item').dataset.itemid;
 
@@ -119,24 +130,18 @@ elements.shopping.addEventListener('click', e => {
     }
 });
 
+// Очистка Shopping list
 elements.clrShpLst.addEventListener('click', e => {
     let arr = [];
     let i = 0;
     state.list.items.forEach(el => arr[i++] = el.id);
-    //console.log('arr: ', arr);
-    //let j = 0;
-    //console.log('state.list.items ', state.list.items);
     arr.forEach(el => {
-        //console.log(++j, ' el: ', el);
         listView.deleteItem(el);
         state.list.deleteItem(el);
     });
-
-        
 });
 
 //LIKE CONTROLLER
-
 const controlLike = () => {
     if (!state.likes) state.likes = new Likes();
     const currentID = state.recipe.id;
@@ -190,8 +195,17 @@ elements.recipe.addEventListener('click', e => {
         recipeView.updateServingsIngredients(state.recipe);
     } else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
         controlList();
-    }  else if (e.target.matches('.recipe__love, .recipe__love *')) {
+    } else if (e.target.matches('.recipe__love, .recipe__love *')) {
         controlLike();
+    } else if (e.target.matches('.btn-addShp, .btn-addShp *')) {
+        const el = e.target.closest('.recipe__item');
+        let j;
+        for (let i = 0; i < el.parentNode.childNodes.length; i++) {
+            if (el.parentNode.childNodes[i] === el) j = (i - 1) / 2;
+        }
+        controlList1(j);
     }
 
 });
+
+//window.state = state;

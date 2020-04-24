@@ -25,9 +25,11 @@ const formatCount = count => {
 
 const createIngredient = ingredient => `
     <li class="recipe__item">
-        <svg class="recipe__icon">
-            <use href="img/icons.svg#icon-check"></use>
-        </svg>
+        <button class="btn-tiny btn-addShp">
+            <svg class="recipe__icon">
+                <use href="img/icons.svg#icon-shopping-cart"></use>
+            </svg>
+        </button>
         <div class="recipe__count">${formatCount(ingredient.count)}</div>
         <div class="recipe__ingredient">
             <span class="recipe__unit">${ingredient.unit}</span>
