@@ -13,7 +13,6 @@ import {
 } from './views/base';
 
 const state = {};
-window.state = state;
 
 const controlSearch = async () => {
     const query = searchView.getInput();
@@ -116,7 +115,24 @@ elements.shopping.addEventListener('click', e => {
     } else if (e.target.matches('.shopping__count-value')) {
         const val = parseFloat(e.target.value, 10);
         state.list.updateCount(id, val);
+
     }
+});
+
+elements.clrShpLst.addEventListener('click', e => {
+    let arr = [];
+    let i = 0;
+    state.list.items.forEach(el => arr[i++] = el.id);
+    //console.log('arr: ', arr);
+    //let j = 0;
+    //console.log('state.list.items ', state.list.items);
+    arr.forEach(el => {
+        //console.log(++j, ' el: ', el);
+        listView.deleteItem(el);
+        state.list.deleteItem(el);
+    });
+
+        
 });
 
 //LIKE CONTROLLER
@@ -179,5 +195,3 @@ elements.recipe.addEventListener('click', e => {
     }
 
 });
-
-window.l = new List();

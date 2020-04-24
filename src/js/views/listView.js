@@ -16,6 +16,8 @@ export const renderItem = item => {
         </li>
     `;
     elements.shopping.insertAdjacentHTML('beforeend', markup);
+    //console.log('log elements.shopping: ', elements.shopping);
+    //console.dir('dir elements.shopping: ', elements.shopping);
 };
 
 export const deleteItem = id => {
